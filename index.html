@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bangladesh Top Earn - WebApp</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+      padding-bottom: 70px;
+    }
+
+    /* Top Header */
+    .header {
+      background-color: #00b894;
+      color: white;
+      padding: 15px;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .user-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+
+    .balance-box {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    /* Section Container */
+    .container {
+      padding: 15px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Projects Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .grid-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      background: #f0f3f8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 6px;
+      transition: 0.2s;
+    }
+
+    .icon-box:active {
+      transform: scale(0.95);
+    }
+
+    .grid-item span {
+      font-size: 11px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    /* Specific Icon Colors */
+    .c-gmail { color: #ea4335; }
+    .c-task { color: #6c5ce7; }
+    .c-salary { color: #00b894; }
+    .c-leadership { color: #fdcb6e; }
+    .c-target { color: #d63031; }
+    .c-refer { color: #a29bfe; }
+    .c-gift { color: #e84393; }
+    .c-math { color: #0984e3; }
+    .c-typing { color: #2d3436; }
+    .c-profile { color: #74b9ff; }
+    .c-support { color: #ff7675; }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #eee;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 11px;
+      color: #777;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      color: #00b894;
+      font-weight: bold;
+    }
+
+    .nav-item i {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .home-btn {
+      background: #00b894;
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -20px;
+      border: 3px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <div class="header">
+    <div class="top-bar">
+      <div><i class="fa-solid fa-bars"></i> BANGLADESH TOP EARN</div>
+      <div><i class="fa-regular fa-bell"></i></div>
+    </div>
+    <div class="user-card">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+        <div>
+          <div style="font-size: 10px; opacity: 0.8;">WELCOME BACK,</div>
+          <div id="username" style="font-weight: bold;">User</div>
+        </div>
+      </div>
+      <div class="balance-box">৳ <span id="balance">0.00</span></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="section-title">
+      <i class="fa-solid fa-rocket" style="color: #6c5ce7;"></i> আমাদের প্রজেক্ট সমূহ
+    </div>
+
+    <div class="grid">
+      <!-- 1. জিমেইল সেল -->
+      <div class="grid-item" onclick="handleClick('Gmail Sell')">
+        <div class="icon-box c-gmail"><i class="fa-solid fa-envelope"></i></div>
+        <span>জিমেইল সেল</span>
+      </div>
+
+      <!-- 2. Micro Task (নতুন যুক্ত করা হয়েছে) -->
+      <div class="grid-item" onclick="handleClick('Micro Task')">
+        <div class="icon-box c-task"><i class="fa-solid fa-list-check"></i></div>
+        <span>মাইক্রো টাস্ক</span>
+      </div>
+
+      <!-- 3. স্যালারি -->
+      <div class="grid-item" onclick="handleClick('Salary')">
+        <div class="icon-box c-salary"><i class="fa-solid fa-wallet"></i></div>
+        <span>স্যালারি</span>
+      </div>
+
+      <!-- 4. লিডারশিপ -->
+      <div class="grid-item" onclick="handleClick('Leadership')">
+        <div class="icon-box c-leadership"><i class="fa-solid fa-crown"></i></div>
+        <span>লিডারশিপ</span>
+      </div>
+
+      <!-- 5. টার্গেট বোনাস -->
+      <div class="grid-item" onclick="handleClick('Target Bonus')">
+        <div class="icon-box c-target"><i class="fa-solid fa-bullseye"></i></div>
+        <span>টার্গেট বোনাস</span>
+      </div>
+
+      <!-- 6. রেফার -->
+      <div class="grid-item" onclick="handleClick('Refer')">
+        <div class="icon-box c-refer"><i class="fa-solid fa-user-plus"></i></div>
+        <span>রেফার</span>
+      </div>
+
+      <!-- 7. গিফট কোড -->
+      <div class="grid-item" onclick="handleClick('Gift Code')">
+        <div class="icon-box c-gift"><i class="fa-solid fa-gift"></i></div>
+        <span>গিফট কোড</span>
+      </div>
+
+      <!-- 8. অংক করুন -->
+      <div class="grid-item" onclick="handleClick('Math Quiz')">
+        <div class="icon-box c-math"><i class="fa-solid fa-calculator"></i></div>
+        <span>অংক করুন</span>
+      </div>
+
+      <!-- 9. টাইপিং জব -->
+      <div class="grid-item" onclick="handleClick('Typing Job')">
+        <div class="icon-box c-typing"><i class="fa-solid fa-keyboard"></i></div>
+        <span>টাইপিং জব</span>
+      </div>
+
+      <!-- 10. প্রোফাইল -->
+      <div class="grid-item" onclick="handleClick('Profile')">
+        <div class="icon-box c-profile"><i class="fa-solid fa-user-gear"></i></div>
+        <span>প্রোফাইল</span>
+      </div>
+
+      <!-- 11. সাপোর্ট -->
+      <div class="grid-item" onclick="handleClick('Support')">
+        <div class="icon-box c-support"><i class="fa-solid fa-headset"></i></div>
+        <span>সাপোর্ট</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="#" class="nav-item"><i class="fa-solid fa-headset"></i>Help</a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-wallet"></i>Wallet</a>
+    <a href="#" class="nav-item active"><div class="home-btn"><i class="fa-solid fa-house" style="color: white; font-size: 18px;"></i></div></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-users"></i>Team</a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-user"></i>Profile</a>
+  </div>
+
+  <script>
+    // Telegram WebApp Initialization
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // Set User Name from Telegram Context
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+    }
+
+    // Function to handle clicks and send data back to Python bot
+    function handleClick(actionName) {
+      tg.sendData(actionName);
+    }
+  </script>
+</body>
+</html>
