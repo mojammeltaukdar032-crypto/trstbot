@@ -20,10 +20,10 @@
     body {
       background-color: #f4f6f9;
       color: #333;
-      padding-bottom: 70px;
+      padding-bottom: 80px;
     }
 
-    /* Top Header */
+    /* Header */
     .header {
       background-color: #00b894;
       color: white;
@@ -57,20 +57,11 @@
       font-weight: bold;
     }
 
-    /* Common Card Styles */
-    .card-box {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
     .container {
       padding: 15px;
     }
 
+    /* Page Visibility Logic */
     .page {
       display: none;
     }
@@ -79,11 +70,11 @@
       display: block;
     }
 
-    /* Active Banner */
+    /* Banner & Cards */
     .active-banner {
       background: linear-gradient(135deg, #ff7675, #d63031);
       color: white;
-      padding: 20px;
+      padding: 18px;
       border-radius: 15px;
       text-align: center;
       margin-bottom: 15px;
@@ -100,7 +91,25 @@
       cursor: pointer;
     }
 
-    /* Grid layout */
+    .card-box {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* Grid Layout */
+    .section-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -108,12 +117,14 @@
       background: white;
       padding: 15px;
       border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .grid-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center;
       cursor: pointer;
     }
 
@@ -135,67 +146,7 @@
       color: #555;
     }
 
-    /* Sidebar Drawer Menu */
-    .sidebar-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      z-index: 999;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -280px;
-      width: 280px;
-      height: 100%;
-      background: white;
-      z-index: 1000;
-      transition: 0.3s;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 15px;
-      font-weight: bold;
-      color: #0984e3;
-    }
-
-    .menu-group {
-      margin-top: 15px;
-    }
-
-    .menu-title {
-      font-size: 10px;
-      color: #aaa;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      color: #444;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    /* Forms & Buttons */
+    /* Form UI */
     .form-input {
       width: 100%;
       padding: 12px;
@@ -217,7 +168,48 @@
       margin-top: 10px;
     }
 
-    /* Bottom Nav */
+    /* Sidebar Drawer */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: white;
+      z-index: 1000;
+      transition: 0.3s;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      font-weight: bold;
+      color: #0984e3;
+    }
+
+    .menu-group { margin-top: 15px; }
+    .menu-title { font-size: 10px; color: #aaa; letter-spacing: 1px; margin-bottom: 8px; }
+    .menu-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; color: #444; font-size: 14px; cursor: pointer; }
+
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -235,7 +227,6 @@
       align-items: center;
       font-size: 11px;
       color: #777;
-      text-decoration: none;
       cursor: pointer;
     }
 
@@ -255,7 +246,7 @@
 </head>
 <body>
 
-  <!-- Drawer Overlay & Sidebar -->
+  <!-- Drawer Menu -->
   <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -263,18 +254,17 @@
       <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="font-size: 20px; cursor: pointer;"></i>
     </div>
     
-    <!-- Profile Info Box inside Drawer -->
     <div style="text-align: center; margin: 15px 0;">
       <i class="fa-solid fa-circle-user" style="font-size: 50px; color: #74b9ff;"></i>
-      <h3 style="margin-top: 5px;">Mithun Bhai</h3>
+      <h3 style="margin-top: 5px;" id="sideUsername">Mithun Bhai</h3>
       <span style="font-size: 12px; color: #777;">ID: 3619 • <b style="color: red;">Inactive</b></span>
     </div>
 
     <div class="menu-group">
       <div class="menu-title">HOME SELECTION</div>
-      <div class="menu-item" onclick="showPage('dashboardPage'); toggleSidebar();"><i class="fa-solid fa-house" style="color:#0984e3;"></i> Dashboard</div>
-      <div class="menu-item"><i class="fa-solid fa-trophy" style="color:#fdcb6e;"></i> Leaderboard</div>
-      <div class="menu-item"><i class="fa-solid fa-user-gear" style="color:#a29bfe;"></i> Profile Update</div>
+      <div class="menu-item" onclick="showPage('homePage'); toggleSidebar();"><i class="fa-solid fa-house" style="color:#0984e3;"></i> Dashboard</div>
+      <div class="menu-item" onclick="showPage('leadershipPage'); toggleSidebar();"><i class="fa-solid fa-trophy" style="color:#fdcb6e;"></i> Leaderboard</div>
+      <div class="menu-item" onclick="showPage('profilePage'); toggleSidebar();"><i class="fa-solid fa-user-gear" style="color:#a29bfe;"></i> Profile Update</div>
     </div>
 
     <div class="menu-group">
@@ -284,17 +274,11 @@
 
     <div class="menu-group">
       <div class="menu-title">FINANCE</div>
-      <div class="menu-item"><i class="fa-solid fa-money-bill-transfer" style="color:#00b894;"></i> Withdraw Funds</div>
-      <div class="menu-item"><i class="fa-solid fa-clock-rotate-left" style="color:#6c5ce7;"></i> Payment History</div>
-    </div>
-
-    <div class="menu-group">
-      <div class="menu-title">ACCOUNT</div>
-      <div class="menu-item" onclick="showPage('loginPage'); toggleSidebar();" style="color: red; font-weight: bold;"><i class="fa-solid fa-right-from-bracket"></i> Log Out</div>
+      <div class="menu-item" onclick="showPage('walletPage'); toggleSidebar();"><i class="fa-solid fa-wallet" style="color:#00b894;"></i> Withdraw Funds</div>
     </div>
   </div>
 
-  <!-- Top Header -->
+  <!-- Top Header Bar -->
   <div class="header">
     <div class="top-bar">
       <div onclick="toggleSidebar()" style="cursor: pointer;"><i class="fa-solid fa-bars"></i> BANGLADESH TOP EARN</div>
@@ -312,10 +296,11 @@
     </div>
   </div>
 
+  <!-- Content Sections -->
   <div class="container">
 
-    <!-- PAGE 1: MAIN DASHBOARD -->
-    <div id="dashboardPage" class="page active">
+    <!-- 0. HOME DASHBOARD -->
+    <div id="homePage" class="page active">
       <div class="active-banner">
         <i class="fa-solid fa-triangle-exclamation" style="font-size: 30px;"></i>
         <h3>আপনার একাউন্ট এক্টিভ নয়!</h3>
@@ -336,12 +321,16 @@
         </div>
       </div>
 
+      <div class="section-title">
+        <i class="fa-solid fa-rocket" style="color: #6c5ce7;"></i> আমাদের প্রজেক্ট সমূহ
+      </div>
+
       <div class="grid">
         <div class="grid-item" onclick="showPage('gmailPage')">
           <div class="icon-box" style="color: #ea4335;"><i class="fa-solid fa-envelope"></i></div>
           <span>জিমেইল সেল</span>
         </div>
-        <div class="grid-item">
+        <div class="grid-item" onclick="showPage('microtaskPage')">
           <div class="icon-box" style="color: #6c5ce7;"><i class="fa-solid fa-list-check"></i></div>
           <span>মাইক্রো টাস্ক</span>
         </div>
@@ -349,14 +338,42 @@
           <div class="icon-box" style="color: #00b894;"><i class="fa-solid fa-wallet"></i></div>
           <span>স্যালারি</span>
         </div>
+        <div class="grid-item" onclick="showPage('leadershipPage')">
+          <div class="icon-box" style="color: #fdcb6e;"><i class="fa-solid fa-crown"></i></div>
+          <span>লিডারশিপ</span>
+        </div>
+        <div class="grid-item" onclick="showPage('targetPage')">
+          <div class="icon-box" style="color: #d63031;"><i class="fa-solid fa-bullseye"></i></div>
+          <span>টার্গেট বোনাস</span>
+        </div>
+        <div class="grid-item" onclick="showPage('referPage')">
+          <div class="icon-box" style="color: #a29bfe;"><i class="fa-solid fa-user-plus"></i></div>
+          <span>রেফার</span>
+        </div>
         <div class="grid-item" onclick="showPage('giftPage')">
           <div class="icon-box" style="color: #e84393;"><i class="fa-solid fa-gift"></i></div>
           <span>গিফট কোড</span>
         </div>
+        <div class="grid-item" onclick="showPage('mathPage')">
+          <div class="icon-box" style="color: #0984e3;"><i class="fa-solid fa-calculator"></i></div>
+          <span>অংক করুন</span>
+        </div>
+        <div class="grid-item" onclick="showPage('typingPage')">
+          <div class="icon-box" style="color: #2d3436;"><i class="fa-solid fa-keyboard"></i></div>
+          <span>টাইপিং জব</span>
+        </div>
+        <div class="grid-item" onclick="showPage('profilePage')">
+          <div class="icon-box" style="color: #74b9ff;"><i class="fa-solid fa-user-gear"></i></div>
+          <span>প্রোফাইল</span>
+        </div>
+        <div class="grid-item" onclick="showPage('supportPage')">
+          <div class="icon-box" style="color: #ff7675;"><i class="fa-solid fa-headset"></i></div>
+          <span>সাপোর্ট</span>
+        </div>
       </div>
     </div>
 
-    <!-- PAGE 2: GMAIL SELL -->
+    <!-- 1. GMAIL SELL -->
     <div id="gmailPage" class="page">
       <div class="card-box">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -373,10 +390,19 @@
       </div>
     </div>
 
-    <!-- PAGE 3: MONTHLY SALARY -->
+    <!-- 2. MICRO TASK -->
+    <div id="microtaskPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-list-check" style="font-size: 40px; color: #6c5ce7;"></i>
+        <h3 style="margin-top: 10px;">মাইক্রো টাস্ক</h3>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">বর্তমানে কোনো কাজ উপলব্ধ নেই। প্রতিদিন নতুন কাজ যোগ করা হয়।</p>
+      </div>
+    </div>
+
+    <!-- 3. SALARY -->
     <div id="salaryPage" class="page">
       <div class="card-box">
-        <i class="fa-solid fa-money-check-dollar" style="font-size: 40px; color: #00b894;"></i>
+        <i class="fa-solid fa-wallet" style="font-size: 40px; color: #00b894;"></i>
         <h3 style="margin-top: 10px;">Monthly Salary</h3>
         <p style="font-size: 12px; color: #666; margin: 10px 0;">500টি এক্টিভ রেফার পূর্ণ করে মাসিক বেতন নিশ্চিত করুন।</p>
         <div style="background: #f0f3f8; padding: 15px; border-radius: 10px; font-weight: bold; color: #00b894;">
@@ -386,43 +412,123 @@
       </div>
     </div>
 
-    <!-- PAGE 4: GIFT CODE -->
-    <div id="giftPage" class="page">
+    <!-- 4. LEADERSHIP -->
+    <div id="leadershipPage" class="page">
       <div class="card-box">
-        <i class="fa-solid fa-gift" style="font-size: 40px; color: #fdcb6e;"></i>
-        <h3 style="margin-top: 10px;">Redeem Your Code</h3>
-        <input type="text" class="form-input" placeholder="ENTER CODE" style="text-align: center; margin-top: 15px;">
-        <button class="action-btn" style="background: #6c5ce7;">Claim Gift Now</button>
+        <i class="fa-solid fa-crown" style="font-size: 40px; color: #fdcb6e;"></i>
+        <h3 style="margin-top: 10px;">লিডারশিপ বোর্ড</h3>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">সেরা ১০ জন রেফারকারী এবং আর্নকারীর তালিকা শীঘ্রই প্রকাশ করা হবে।</p>
       </div>
     </div>
 
-    <!-- PAGE 5: LOGIN / SIGNUP PAGE -->
-    <div id="loginPage" class="page">
+    <!-- 5. TARGET BONUS -->
+    <div id="targetPage" class="page">
       <div class="card-box">
-        <h3>Welcome Back</h3>
-        <p style="font-size: 12px; color: #777;">Login to access your dashboard</p>
-        <input type="email" class="form-input" placeholder="Email Address">
-        <input type="password" class="form-input" placeholder="Password">
-        <button class="action-btn" style="background: #0984e3;">LOGIN SECURELY</button>
+        <i class="fa-solid fa-bullseye" style="font-size: 40px; color: #d63031;"></i>
+        <h3 style="margin-top: 10px;">টার্গেট বোনাস</h3>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">ডেইলি এবং উইকলি টার্গেট পূর্ণ করে বোনাস ক্লেইম করুন।</p>
+      </div>
+    </div>
+
+    <!-- 6. REFER -->
+    <div id="referPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-user-plus" style="font-size: 40px; color: #a29bfe;"></i>
+        <h3 style="margin-top: 10px;">আপনার রেফার লিংক</h3>
+        <input type="text" class="form-input" value="https://t.me/YourBot?start=3619" readonly style="text-align: center; margin-top: 10px;">
+        <button class="action-btn" style="background: #a29bfe;" onclick="alert('লিংক কপি করা হয়েছে!')">লিংক কপি করুন</button>
+      </div>
+    </div>
+
+    <!-- 7. GIFT CODE -->
+    <div id="giftPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-gift" style="font-size: 40px; color: #e84393;"></i>
+        <h3 style="margin-top: 10px;">Redeem Your Code</h3>
+        <input type="text" class="form-input" placeholder="ENTER CODE" style="text-align: center; margin-top: 15px;">
+        <button class="action-btn" style="background: #e84393;">Claim Gift Now</button>
+      </div>
+    </div>
+
+    <!-- 8. MATH QUIZ -->
+    <div id="mathPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-calculator" style="font-size: 40px; color: #0984e3;"></i>
+        <h3 style="margin-top: 10px;">অংক সমাধান করুন</h3>
+        <h2 style="margin: 15px 0;">5 + 8 = ?</h2>
+        <input type="number" class="form-input" placeholder="উত্তর লিখুন" style="text-align: center;">
+        <button class="action-btn" style="background: #0984e3;">সাবমিট</button>
+      </div>
+    </div>
+
+    <!-- 9. TYPING JOB -->
+    <div id="typingPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-keyboard" style="font-size: 40px; color: #2d3436;"></i>
+        <h3 style="margin-top: 10px;">টাইপিং জব</h3>
+        <p style="background: #f0f3f8; padding: 10px; border-radius: 8px; margin: 10px 0;">BDTOP2026</p>
+        <input type="text" class="form-input" placeholder="উপরের ক্যাপচাটি হুবহু লিখুন" style="text-align: center;">
+        <button class="action-btn" style="background: #2d3436;">জমা দিন</button>
+      </div>
+    </div>
+
+    <!-- 10. PROFILE -->
+    <div id="profilePage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-user-gear" style="font-size: 40px; color: #74b9ff;"></i>
+        <h3 style="margin-top: 10px;">ইউজার প্রোফাইল</h3>
+        <input type="text" class="form-input" value="Mithun Bhai">
+        <input type="text" class="form-input" value="ID: 3619" readonly>
+        <button class="action-btn" style="background: #74b9ff;">আপডেট করুন</button>
+      </div>
+    </div>
+
+    <!-- 11. SUPPORT / HELP -->
+    <div id="supportPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-headset" style="font-size: 40px; color: #ff7675;"></i>
+        <h3 style="margin-top: 10px;">হেল্প এডমিন</h3>
+        <p style="font-size: 12px; color: #666; margin: 10px 0;">যেকোনো প্রয়োজনে আমাদের অফিসিয়াল সাপোর্ট গ্রুপে মেসেজ দিন।</p>
+        <button class="action-btn" style="background: #ff7675;">Telegram Support</button>
+      </div>
+    </div>
+
+    <!-- WALLET / WITHDRAW -->
+    <div id="walletPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-wallet" style="font-size: 40px; color: #00b894;"></i>
+        <h3 style="margin-top: 10px;">টাকা তুলুন (Withdraw)</h3>
+        <select class="form-input">
+          <option>বিকাশ (bKash)</option>
+          <option>নগদ (Nagad)</option>
+        </select>
+        <input type="text" class="form-input" placeholder="একাউন্ট নম্বর">
+        <input type="number" class="form-input" placeholder="টাকার পরিমাণ">
+        <button class="action-btn">উইথড্র রিকুয়েস্ট</button>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Navigation Bar -->
+  <!-- Bottom Nav Bar -->
   <div class="bottom-nav">
-    <div class="nav-item"><i class="fa-solid fa-headset"></i>Help</div>
-    <div class="nav-item"><i class="fa-solid fa-wallet"></i>Wallet</div>
-    <div class="nav-item" onclick="showPage('dashboardPage')"><div class="home-btn"><i class="fa-solid fa-house"></i></div></div>
-    <div class="nav-item"><i class="fa-solid fa-users"></i>Team</div>
-    <div class="nav-item" onclick="toggleSidebar()"><i class="fa-solid fa-user"></i>Profile</div>
+    <div class="nav-item" onclick="showPage('supportPage')"><i class="fa-solid fa-headset"></i>Help</div>
+    <div class="nav-item" onclick="showPage('walletPage')"><i class="fa-solid fa-wallet"></i>Wallet</div>
+    <div class="nav-item" onclick="showPage('homePage')"><div class="home-btn"><i class="fa-solid fa-house"></i></div></div>
+    <div class="nav-item" onclick="showPage('referPage')"><i class="fa-solid fa-users"></i>Team</div>
+    <div class="nav-item" onclick="showPage('profilePage')"><i class="fa-solid fa-user"></i>Profile</div>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Side Navigation Drawer Toggle
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+      document.getElementById('sideUsername').innerText = tg.initDataUnsafe.user.first_name;
+    }
+
+    // Toggle Sidebar
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('overlay');
@@ -435,11 +541,12 @@
       }
     }
 
-    // Page Switching Logic
+    // Switch Pages without reloading
     function showPage(pageId) {
       const pages = document.querySelectorAll('.page');
       pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
     }
   </script>
 </body>
