@@ -206,7 +206,7 @@
         <span>জিমেইল সেল</span>
       </div>
 
-      <!-- 2. Micro Task (নতুন যুক্ত করা হয়েছে) -->
+      <!-- 2. মাইক্রো টাস্ক -->
       <div class="grid-item" onclick="handleClick('Micro Task')">
         <div class="icon-box c-task"><i class="fa-solid fa-list-check"></i></div>
         <span>মাইক্রো টাস্ক</span>
@@ -278,16 +278,13 @@
   </div>
 
   <script>
-    // Telegram WebApp Initialization
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Set User Name from Telegram Context
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
       document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
     }
 
-    // Function to handle clicks and send data back to Python bot
     function handleClick(actionName) {
       tg.sendData(actionName);
     }
