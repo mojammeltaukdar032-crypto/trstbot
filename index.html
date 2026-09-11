@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bangladesh Top Earn - WebApp</title>
+  <title>BANGLADESH TOP EARN</title>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Telegram WebApp SDK -->
@@ -57,21 +57,50 @@
       font-weight: bold;
     }
 
-    /* Section Container */
+    /* Common Card Styles */
+    .card-box {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
     .container {
       padding: 15px;
     }
 
-    .section-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .page {
+      display: none;
     }
 
-    /* Projects Grid */
+    .page.active {
+      display: block;
+    }
+
+    /* Active Banner */
+    .active-banner {
+      background: linear-gradient(135deg, #ff7675, #d63031);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .btn-active {
+      background: white;
+      color: #d63031;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    /* Grid layout */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -79,14 +108,12 @@
       background: white;
       padding: 15px;
       border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .grid-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
       cursor: pointer;
     }
 
@@ -100,11 +127,6 @@
       justify-content: center;
       font-size: 20px;
       margin-bottom: 6px;
-      transition: 0.2s;
-    }
-
-    .icon-box:active {
-      transform: scale(0.95);
     }
 
     .grid-item span {
@@ -113,20 +135,89 @@
       color: #555;
     }
 
-    /* Specific Icon Colors */
-    .c-gmail { color: #ea4335; }
-    .c-task { color: #6c5ce7; }
-    .c-salary { color: #00b894; }
-    .c-leadership { color: #fdcb6e; }
-    .c-target { color: #d63031; }
-    .c-refer { color: #a29bfe; }
-    .c-gift { color: #e84393; }
-    .c-math { color: #0984e3; }
-    .c-typing { color: #2d3436; }
-    .c-profile { color: #74b9ff; }
-    .c-support { color: #ff7675; }
+    /* Sidebar Drawer Menu */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
 
-    /* Bottom Navigation Bar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: white;
+      z-index: 1000;
+      transition: 0.3s;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      font-weight: bold;
+      color: #0984e3;
+    }
+
+    .menu-group {
+      margin-top: 15px;
+    }
+
+    .menu-title {
+      font-size: 10px;
+      color: #aaa;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      color: #444;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Forms & Buttons */
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      background: #00b894;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -136,7 +227,6 @@
       justify-content: space-around;
       padding: 10px 0;
       border-top: 1px solid #eee;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     }
 
     .nav-item {
@@ -146,16 +236,7 @@
       font-size: 11px;
       color: #777;
       text-decoration: none;
-    }
-
-    .nav-item.active {
-      color: #00b894;
-      font-weight: bold;
-    }
-
-    .nav-item i {
-      font-size: 18px;
-      margin-bottom: 2px;
+      cursor: pointer;
     }
 
     .home-btn {
@@ -169,16 +250,54 @@
       justify-content: center;
       margin-top: -20px;
       border: 3px solid white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
 
+  <!-- Drawer Overlay & Sidebar -->
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div><i class="fa-solid fa-bolt"></i> BD TOP EARN</div>
+      <i class="fa-solid fa-xmark" onclick="toggleSidebar()" style="font-size: 20px; cursor: pointer;"></i>
+    </div>
+    
+    <!-- Profile Info Box inside Drawer -->
+    <div style="text-align: center; margin: 15px 0;">
+      <i class="fa-solid fa-circle-user" style="font-size: 50px; color: #74b9ff;"></i>
+      <h3 style="margin-top: 5px;">Mithun Bhai</h3>
+      <span style="font-size: 12px; color: #777;">ID: 3619 • <b style="color: red;">Inactive</b></span>
+    </div>
+
+    <div class="menu-group">
+      <div class="menu-title">HOME SELECTION</div>
+      <div class="menu-item" onclick="showPage('dashboardPage'); toggleSidebar();"><i class="fa-solid fa-house" style="color:#0984e3;"></i> Dashboard</div>
+      <div class="menu-item"><i class="fa-solid fa-trophy" style="color:#fdcb6e;"></i> Leaderboard</div>
+      <div class="menu-item"><i class="fa-solid fa-user-gear" style="color:#a29bfe;"></i> Profile Update</div>
+    </div>
+
+    <div class="menu-group">
+      <div class="menu-title">SELL SERVICE</div>
+      <div class="menu-item" onclick="showPage('gmailPage'); toggleSidebar();"><i class="fa-solid fa-envelope" style="color:#ea4335;"></i> Gmail Sell</div>
+    </div>
+
+    <div class="menu-group">
+      <div class="menu-title">FINANCE</div>
+      <div class="menu-item"><i class="fa-solid fa-money-bill-transfer" style="color:#00b894;"></i> Withdraw Funds</div>
+      <div class="menu-item"><i class="fa-solid fa-clock-rotate-left" style="color:#6c5ce7;"></i> Payment History</div>
+    </div>
+
+    <div class="menu-group">
+      <div class="menu-title">ACCOUNT</div>
+      <div class="menu-item" onclick="showPage('loginPage'); toggleSidebar();" style="color: red; font-weight: bold;"><i class="fa-solid fa-right-from-bracket"></i> Log Out</div>
+    </div>
+  </div>
+
   <!-- Top Header -->
   <div class="header">
     <div class="top-bar">
-      <div><i class="fa-solid fa-bars"></i> BANGLADESH TOP EARN</div>
+      <div onclick="toggleSidebar()" style="cursor: pointer;"><i class="fa-solid fa-bars"></i> BANGLADESH TOP EARN</div>
       <div><i class="fa-regular fa-bell"></i></div>
     </div>
     <div class="user-card">
@@ -186,107 +305,141 @@
         <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
         <div>
           <div style="font-size: 10px; opacity: 0.8;">WELCOME BACK,</div>
-          <div id="username" style="font-weight: bold;">User</div>
+          <div id="username" style="font-weight: bold;">Mithun Bhai</div>
         </div>
       </div>
       <div class="balance-box">৳ <span id="balance">0.00</span></div>
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="container">
-    <div class="section-title">
-      <i class="fa-solid fa-rocket" style="color: #6c5ce7;"></i> আমাদের প্রজেক্ট সমূহ
-    </div>
 
-    <div class="grid">
-      <!-- 1. জিমেইল সেল -->
-      <div class="grid-item" onclick="handleClick('Gmail Sell')">
-        <div class="icon-box c-gmail"><i class="fa-solid fa-envelope"></i></div>
-        <span>জিমেইল সেল</span>
+    <!-- PAGE 1: MAIN DASHBOARD -->
+    <div id="dashboardPage" class="page active">
+      <div class="active-banner">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 30px;"></i>
+        <h3>আপনার একাউন্ট এক্টিভ নয়!</h3>
+        <p style="font-size: 12px; margin-top: 5px;">সবগুলো সার্ভিস ব্যবহার করতে এখনই আপনার একাউন্টটি এক্টিভ করুন।</p>
+        <button class="btn-active"><i class="fa-solid fa-bolt"></i> Active Now</button>
       </div>
 
-      <!-- 2. মাইক্রো টাস্ক -->
-      <div class="grid-item" onclick="handleClick('Micro Task')">
-        <div class="icon-box c-task"><i class="fa-solid fa-list-check"></i></div>
-        <span>মাইক্রো টাস্ক</span>
+      <div class="card-box">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px;">
+          <span><i class="fa-regular fa-clock"></i> সাইটের বয়স</span>
+          <span style="color: #00b894;">● Live</span>
+        </div>
+        <div style="display: flex; justify-content: space-around; font-weight: bold;">
+          <div><h2 style="color:#0984e3;">41</h2><span style="font-size:10px;">দিন</span></div>
+          <div><h2 style="color:#0984e3;">22</h2><span style="font-size:10px;">ঘন্টা</span></div>
+          <div><h2 style="color:#0984e3;">19</h2><span style="font-size:10px;">মিনিট</span></div>
+          <div><h2 style="color:#0984e3;">03</h2><span style="font-size:10px;">সেকেন্ড</span></div>
+        </div>
       </div>
 
-      <!-- 3. স্যালারি -->
-      <div class="grid-item" onclick="handleClick('Salary')">
-        <div class="icon-box c-salary"><i class="fa-solid fa-wallet"></i></div>
-        <span>স্যালারি</span>
-      </div>
-
-      <!-- 4. লিডারশিপ -->
-      <div class="grid-item" onclick="handleClick('Leadership')">
-        <div class="icon-box c-leadership"><i class="fa-solid fa-crown"></i></div>
-        <span>লিডারশিপ</span>
-      </div>
-
-      <!-- 5. টার্গেট বোনাস -->
-      <div class="grid-item" onclick="handleClick('Target Bonus')">
-        <div class="icon-box c-target"><i class="fa-solid fa-bullseye"></i></div>
-        <span>টার্গেট বোনাস</span>
-      </div>
-
-      <!-- 6. রেফার -->
-      <div class="grid-item" onclick="handleClick('Refer')">
-        <div class="icon-box c-refer"><i class="fa-solid fa-user-plus"></i></div>
-        <span>রেফার</span>
-      </div>
-
-      <!-- 7. গিফট কোড -->
-      <div class="grid-item" onclick="handleClick('Gift Code')">
-        <div class="icon-box c-gift"><i class="fa-solid fa-gift"></i></div>
-        <span>গিফট কোড</span>
-      </div>
-
-      <!-- 8. অংক করুন -->
-      <div class="grid-item" onclick="handleClick('Math Quiz')">
-        <div class="icon-box c-math"><i class="fa-solid fa-calculator"></i></div>
-        <span>অংক করুন</span>
-      </div>
-
-      <!-- 9. টাইপিং জব -->
-      <div class="grid-item" onclick="handleClick('Typing Job')">
-        <div class="icon-box c-typing"><i class="fa-solid fa-keyboard"></i></div>
-        <span>টাইপিং জব</span>
-      </div>
-
-      <!-- 10. প্রোফাইল -->
-      <div class="grid-item" onclick="handleClick('Profile')">
-        <div class="icon-box c-profile"><i class="fa-solid fa-user-gear"></i></div>
-        <span>প্রোফাইল</span>
-      </div>
-
-      <!-- 11. সাপোর্ট -->
-      <div class="grid-item" onclick="handleClick('Support')">
-        <div class="icon-box c-support"><i class="fa-solid fa-headset"></i></div>
-        <span>সাপোর্ট</span>
+      <div class="grid">
+        <div class="grid-item" onclick="showPage('gmailPage')">
+          <div class="icon-box" style="color: #ea4335;"><i class="fa-solid fa-envelope"></i></div>
+          <span>জিমেইল সেল</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-box" style="color: #6c5ce7;"><i class="fa-solid fa-list-check"></i></div>
+          <span>মাইক্রো টাস্ক</span>
+        </div>
+        <div class="grid-item" onclick="showPage('salaryPage')">
+          <div class="icon-box" style="color: #00b894;"><i class="fa-solid fa-wallet"></i></div>
+          <span>স্যালারি</span>
+        </div>
+        <div class="grid-item" onclick="showPage('giftPage')">
+          <div class="icon-box" style="color: #e84393;"><i class="fa-solid fa-gift"></i></div>
+          <span>গিফট কোড</span>
+        </div>
       </div>
     </div>
+
+    <!-- PAGE 2: GMAIL SELL -->
+    <div id="gmailPage" class="page">
+      <div class="card-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3><i class="fa-solid fa-envelope" style="color: #ea4335;"></i> Gmail Sell</h3>
+          <span style="background: #ff7675; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px;">Rate: ৳15.00</span>
+        </div>
+        <div style="background: #fff8e1; padding: 10px; border-radius: 10px; margin-bottom: 15px;">
+          <small>🔑 ব্যবহারের পাসওয়ার্ড:</small>
+          <div style="font-weight: bold; font-size: 16px; margin-top: 5px;">@shanto#&</div>
+        </div>
+        <input type="text" class="form-input" placeholder="example@gmail.com">
+        <input type="password" class="form-input" placeholder="পাসওয়ার্ড লিখুন">
+        <button class="action-btn">জমা দিন</button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MONTHLY SALARY -->
+    <div id="salaryPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-money-check-dollar" style="font-size: 40px; color: #00b894;"></i>
+        <h3 style="margin-top: 10px;">Monthly Salary</h3>
+        <p style="font-size: 12px; color: #666; margin: 10px 0;">500টি এক্টিভ রেফার পূর্ণ করে মাসিক বেতন নিশ্চিত করুন।</p>
+        <div style="background: #f0f3f8; padding: 15px; border-radius: 10px; font-weight: bold; color: #00b894;">
+          MONTHLY SALARY AMOUNT<br><h2 style="margin-top:5px;">৳ 500</h2>
+        </div>
+        <button class="action-btn" style="background: #ccc; margin-top: 15px;" disabled>CLAIM SALARY NOW</button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: GIFT CODE -->
+    <div id="giftPage" class="page">
+      <div class="card-box">
+        <i class="fa-solid fa-gift" style="font-size: 40px; color: #fdcb6e;"></i>
+        <h3 style="margin-top: 10px;">Redeem Your Code</h3>
+        <input type="text" class="form-input" placeholder="ENTER CODE" style="text-align: center; margin-top: 15px;">
+        <button class="action-btn" style="background: #6c5ce7;">Claim Gift Now</button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: LOGIN / SIGNUP PAGE -->
+    <div id="loginPage" class="page">
+      <div class="card-box">
+        <h3>Welcome Back</h3>
+        <p style="font-size: 12px; color: #777;">Login to access your dashboard</p>
+        <input type="email" class="form-input" placeholder="Email Address">
+        <input type="password" class="form-input" placeholder="Password">
+        <button class="action-btn" style="background: #0984e3;">LOGIN SECURELY</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Navigation Bar -->
   <div class="bottom-nav">
-    <a href="#" class="nav-item"><i class="fa-solid fa-headset"></i>Help</a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-wallet"></i>Wallet</a>
-    <a href="#" class="nav-item active"><div class="home-btn"><i class="fa-solid fa-house" style="color: white; font-size: 18px;"></i></div></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-users"></i>Team</a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-user"></i>Profile</a>
+    <div class="nav-item"><i class="fa-solid fa-headset"></i>Help</div>
+    <div class="nav-item"><i class="fa-solid fa-wallet"></i>Wallet</div>
+    <div class="nav-item" onclick="showPage('dashboardPage')"><div class="home-btn"><i class="fa-solid fa-house"></i></div></div>
+    <div class="nav-item"><i class="fa-solid fa-users"></i>Team</div>
+    <div class="nav-item" onclick="toggleSidebar()"><i class="fa-solid fa-user"></i>Profile</div>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+    // Side Navigation Drawer Toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.style.display = 'none';
+      } else {
+        sidebar.classList.add('open');
+        overlay.style.display = 'block';
+      }
     }
 
-    function handleClick(actionName) {
-      tg.sendData(actionName);
+    // Page Switching Logic
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
     }
   </script>
 </body>
